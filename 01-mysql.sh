@@ -12,7 +12,7 @@ LOG_FILE_NAME="$LOGS_FOLDER/$LOG_FILE-$TIMESTAMP.log"
 USERID=$(id -u)
 
 VALIDATE(){
-    if [$1 -ne 0]
+    if [ $1 -ne 0 ]
     then 
         echo -e "$2... $R Failure"
         exit 1
@@ -35,11 +35,11 @@ then
     echo -e $R "ERROR: YOU NEED TO LOGIN WITH SUDO"
     exit 1
 fi
-dnf install mysql-server -y
+dnf install mysql-server -y &>>$LOG_FILE_NAME
 VALIDATE $? "Installing MYSQL-SERVER..."
-systemctl enable mysqld
+systemctl enable mysqld &>>$LOG_FILE_NAME
 VALIDATE $? "Enabling Mysql..."
-systemctl start mysqld
+systemctl start mysqld &>>$LOG_FILE_NAME
 VALIDATE $? "Starting mysql..."
 echo "Setting root password for MYSQL-SERVER..."
-mysql_secure_installation --set-root-pass ExpenseApp@1
+mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE_NAME
