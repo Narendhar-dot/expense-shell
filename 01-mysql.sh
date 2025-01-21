@@ -27,9 +27,9 @@ CHECK_ROOT(){
         exit 1
     fi
 }
+CHECK_ROOT
 
-echo "script started executing at :$TIMESTAMP" &>>$LOG_FILE_NAME
-
+echo "script started executing at :$TIMESTAMP" 
 if [ $USERID -ne 0 ]
 then
     echo -e $R "ERROR: YOU NEED TO LOGIN WITH SUDO"
