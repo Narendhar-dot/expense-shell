@@ -38,33 +38,33 @@ then
 fi
 dnf module disable nodejs -y &>>$LOG_FILE_NAME
 VALIDATE $? "Disabling nodejs..."
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE_NAME
 VALIDATE $? "Enabling nodejs..."
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE_NAME
 VALIDATE $? "Installing nodejs..."
-useradd expense
+useradd expense &>>$LOG_FILE_NAME
 VALIDATE $? "Adding user to expense app..."
-mkdir /app
+mkdir /app &>>$LOG_FILE_NAME
 VALIDATE $? "Make an directory to app..."
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
-VALIDATE $? "Download application code to created app directory..."
-cd /app
-unzip /tmp/backend.zip
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE_NAME
+VALIDATE $? "Download application code to created app directory..." 
+cd /app &>>$LOG_FILE_NAME
+unzip /tmp/backend.zip &>>$LOG_FILE_NAME
 VALIDATE $? "Unzip backend..."
-npm install
+npm install &>>$LOG_FILE_NAME
 VALIDATE $? "Install dependencies..."
-cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
+cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOG_FILE_NAME
 VALIDATE $? "Copying backend.service to services folder..."
 
 #prepare mysql scheme
-dnf install mysql -y
+dnf install mysql -y &>>$LOG_FILE_NAME
 VALIDATE $? "Installing mysql..."
-mysql -h mysql.daws-82s.store -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h mysql.daws-82s.store -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE_NAME
 VALIDATE $? "Setting up the transaction schema and table..."
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOG_FILE_NAME
 VALIDATE $? "Reload the backend..."
-systemctl enable backend
+systemctl enable backend &>>$LOG_FILE_NAME
 VALIDATE $? "Enabling backend..."
-systemctl start backend
+systemctl start backend &>>$LOG_FILE_NAME
 VALIDATE $? "Starting backend..."
