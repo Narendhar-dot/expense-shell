@@ -42,8 +42,14 @@ dnf module enable nodejs:20 -y &>>$LOG_FILE_NAME
 VALIDATE $? "Enabling nodejs..."
 dnf install nodejs -y &>>$LOG_FILE_NAME
 VALIDATE $? "Installing nodejs..."
-useradd expense &>>$LOG_FILE_NAME
-VALIDATE $? "Adding user to expense app..."
+id expense 
+if [ $? -ne 0 ]
+then 
+    useradd expense &>>$LOG_FILE_NAME
+    VALIDATE $? "Adding user to expense app..."
+else
+    echo -e "Expense user exists already...$Y SKIP" $N
+fi
 mkdir /app &>>$LOG_FILE_NAME
 VALIDATE $? "Make an directory to app..."
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE_NAME
