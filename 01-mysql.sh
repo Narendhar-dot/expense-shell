@@ -42,7 +42,7 @@ then
     echo "LOGs_FOLDER is not created" &>>$LOGS_FOLDER
     VALIDATE $? "LOGs_FOLDER is creating..."
 else
-    echo "LOGs_FOLDER already created" &>>$LOGS_FOLDER
+    echo ""
 fi
 
 dnf install mysql-server -y &>>$LOG_FILE_NAME
