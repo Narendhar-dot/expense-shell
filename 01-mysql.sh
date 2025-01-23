@@ -39,10 +39,10 @@ fi
 mkdir -p /var/log/expense-shell-logs
 if [ $? -ne 0 ]
 then 
-    echo "LOG_FOLDER is not created"
-    VALIDATE $? "LOG_FOLDER is creating..."
+    echo "LOGs_FOLDER is not created"
+    VALIDATE $? "LOGs_FOLDER is creating..."
 else
-    echo "LOG_FOLDER already created"
+    echo "LOGs_FOLDER already created" &>>$LOGS_FOLDER
 fi
 
 dnf install mysql-server -y &>>$LOG_FILE_NAME
