@@ -27,9 +27,10 @@ CHECK_ROOT(){
         exit 1
     fi
 }
-CHECK_ROOT
 
+mkdir -p $LOGS_FOLDER
 echo "script started executing at :$TIMESTAMP" &>>$LOG_FILE_NAME
+CHECK_ROOT
 
 if [ $USERID -ne 0 ]
 then
