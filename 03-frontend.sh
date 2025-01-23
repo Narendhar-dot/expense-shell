@@ -37,19 +37,19 @@ then
     exit 1
 fi
 
-dnf install nginx -y &>>$LOGS_FOLDER
+dnf install nginx -y &>>$LOG_FILE_NAME
 VALIDATE $? "Installing NGINX..."
-systemctl enable nginx &>>$LOGS_FOLDER
+systemctl enable nginx &>>$LOG_FILE_NAME
 VALIDATE $? "Enabling NGINX..."
-systemctl starting nginx &>>$LOGS_FOLDER
+systemctl starting nginx &>>$LOG_FILE_NAME
 VALIDATE $? "Starting NGINX..."
-rm -rf /usr/share/nginx/html/* &>>$LOGS_FOLDER
+rm -rf /usr/share/nginx/html/* &>>$LOG_FILE_NAME
 VALIDATE $? "Removing the files from /usr/share/nginx/html/"
-curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOGS_FOLDER
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOG_FILE_NAME
 VALIDATE $? "copy the files into frontend.zip"
-cd /usr/share/nginx/html &>>$LOGS_FOLDER
+cd /usr/share/nginx/html &>>$LOG_FILE_NAME
 VALIDATE $? "Changing the directories.."
-unzip /tmp/frontend.zip &>>$LOGS_FOLDER
+unzip /tmp/frontend.zip &>>$LOG_FILE_NAME
 VALIDATE $? "Unzip the frontend files.."
-systemctl restart nginx &>>$LOGS_FOLDER
+systemctl restart nginx &>>$LOG_FILE_NAME
 VALIDATE $? "Restarting the nginx.."
