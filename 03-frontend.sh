@@ -44,7 +44,7 @@ then
 else
     echo ""
 fi
-dnf install ngins -y
+dnf install nginx -y
 VALIDATE $? "Installing NGINX..."
 systemctl enable nginx
 VALIDATE $? "Enabling NGINX..."
