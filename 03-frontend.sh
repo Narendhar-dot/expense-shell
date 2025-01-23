@@ -36,14 +36,7 @@ then
     echo -e $R "ERROR: YOU NEED TO LOGIN WITH SUDO"
     exit 1
 fi
-mkdir -p /var/log/expense-shell-logs
-if [ $? -ne 0 ]
-then 
-    echo "LOGs_FOLDER is not created" &>>$LOGS_FOLDER
-    VALIDATE $? "LOGs_FOLDER is creating..."
-else
-    echo ""
-fi
+
 dnf install nginx -y &>>$LOGS_FOLDER
 VALIDATE $? "Installing NGINX..."
 systemctl enable nginx &>>$LOGS_FOLDER
