@@ -36,6 +36,15 @@ then
     echo -e $R "ERROR: YOU NEED TO LOGIN WITH SUDO"
     exit 1
 fi
+mkdir -p /var/log/expense-shell-logs
+if [ $? -ne 0 ]
+then 
+    echo "LOG_FOLDER is not created"
+    VALIDATE $? "LOG_FOLDER is creating..."
+else
+    echo "LOG_FOLDER already created"
+fi
+
 dnf install mysql-server -y &>>$LOG_FILE_NAME
 VALIDATE $? "Installing MYSQL-SERVER..."
 systemctl enable mysqld &>>$LOG_FILE_NAME
