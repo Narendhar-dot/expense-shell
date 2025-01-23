@@ -42,7 +42,7 @@ dnf install nginx -y &>>$LOG_FILE_NAME
 VALIDATE $? "Installing NGINX..."
 systemctl enable nginx &>>$LOG_FILE_NAME
 VALIDATE $? "Enabling NGINX..."
-systemctl starting nginx &>>$LOG_FILE_NAME
+systemctl start nginx &>>$LOG_FILE_NAME
 VALIDATE $? "Starting NGINX..."
 rm -rf /usr/share/nginx/html/* &>>$LOG_FILE_NAME
 VALIDATE $? "Removing existing version of code"
