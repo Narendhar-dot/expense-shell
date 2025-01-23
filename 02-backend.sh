@@ -36,6 +36,14 @@ then
     echo -e $R "ERROR: YOU NEED TO LOGIN WITH SUDO"
     exit 1
 fi
+mkdir -p /var/log/expense-shell-logs
+if [ $? -ne 0 ]
+then 
+    echo "LOGs_FOLDER is not created" &>>$LOGS_FOLDER
+    VALIDATE $? "LOGs_FOLDER is creating..."
+else
+    echo ""
+fi
 dnf module disable nodejs -y &>>$LOG_FILE_NAME
 VALIDATE $? "Disabling nodejs..."
 dnf module enable nodejs:20 -y &>>$LOG_FILE_NAME
@@ -68,7 +76,6 @@ dnf install mysql -y &>>$LOG_FILE_NAME
 VALIDATE $? "Installing mysql..."
 mysql -h mysql.daws-82s.store -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE_NAME
 VALIDATE $? "Setting up the transaction schema and table..."
-
 systemctl daemon-reload &>>$LOG_FILE_NAME
 VALIDATE $? "Reload the backend..."
 systemctl enable backend &>>$LOG_FILE_NAME
