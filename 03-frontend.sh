@@ -44,15 +44,19 @@ then
 else
     echo ""
 fi
-dnf install nginx -y
+dnf install nginx -y &>>$LOGS_FOLDER
 VALIDATE $? "Installing NGINX..."
-systemctl enable nginx
+systemctl enable nginx &>>$LOGS_FOLDER
 VALIDATE $? "Enabling NGINX..."
-systemctl starting nginx
+systemctl starting nginx &>>$LOGS_FOLDER
 VALIDATE $? "Starting NGINX..."
-rm -rf /usr/share/nginx/html/*
+rm -rf /usr/share/nginx/html/* &>>$LOGS_FOLDER
 VALIDATE $? "Removing the files from /usr/share/nginx/html/"
-curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOGS_FOLDER
 VALIDATE $? "copy the files into frontend.zip"
-cd /usr/share/nginx/html
-unzip /tmp/frontend.zip
+cd /usr/share/nginx/html &>>$LOGS_FOLDER
+VALIDATE $? "Changing the directories.."
+unzip /tmp/frontend.zip &>>$LOGS_FOLDER
+VALIDATE $? "Unzip the frontend files.."
+systemctl restart nginx &>>$LOGS_FOLDER
+VALIDATE $? "Restarting the nginx.."
