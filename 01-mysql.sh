@@ -39,7 +39,7 @@ fi
 mkdir -p /var/log/expense-shell-logs
 if [ $? -ne 0 ]
 then 
-    echo "LOGs_FOLDER is not created"
+    echo "LOGs_FOLDER is not created" &>>$LOGS_FOLDER
     VALIDATE $? "LOGs_FOLDER is creating..."
 else
     echo "LOGs_FOLDER already created" &>>$LOGS_FOLDER
