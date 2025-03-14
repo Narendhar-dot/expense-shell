@@ -20,6 +20,14 @@ VALIDATE(){
         echo -e "$2... $G success" $N
     fi
 }
+mkdir -p /var/log/expense-shell-logs
+if [ $? -ne 0 ]
+then 
+    echo "LOGs_FOLDER is not created" &>>$LOGS_FOLDER
+    VALIDATE $? "LOGs_FOLDER is creating..."
+else
+    echo ""
+fi
 CHECK_ROOT(){
     if [ $USERID -ne 0 ]
     then 
@@ -36,14 +44,6 @@ then
     echo -e $R "ERROR: YOU NEED TO LOGIN WITH SUDO"
     exit 1
 fi
-mkdir -p /var/log/expense-shell-logs
-if [ $? -ne 0 ]
-then 
-    echo "LOGs_FOLDER is not created" &>>$LOGS_FOLDER
-    VALIDATE $? "LOGs_FOLDER is creating..."
-else
-    echo ""
-fi
 dnf module disable nodejs -y &>>$LOG_FILE_NAME
 VALIDATE $? "Disabling nodejs..."
 dnf module enable nodejs:20 -y &>>$LOG_FILE_NAME
@@ -59,7 +59,7 @@ else
     echo -e "Expense user exists already...$Y SKIPPING" $N
 fi
 mkdir -p /app &>>$LOG_FILE_NAME
-VALIDATE $? "Make an directory to app..."
+VALIDATE $? "Make a directory to app..."
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE_NAME
 VALIDATE $? "Download application code to created app directory..." 
 cd /app &>>$LOG_FILE_NAME
